@@ -6,8 +6,7 @@ export class GithubController {
   constructor(private readonly githubService: GithubService) {}
 
   @Get('search_user')
-  searchUser(@Query('name') name: string): string[] {
-    console.log('API->', name);
-    return [name, 'axel', 'dori'];
+  async searchUser(@Query('name') name: string) {
+    return this.githubService.getUserData(name);
   }
 }
