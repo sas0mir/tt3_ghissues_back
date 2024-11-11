@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Octokit } from '@octokit/rest';
+//import { Octokit } from '@octokit/core';
 
 @Injectable()
 export class GithubService {
-  private octokit: Octokit;
+  private octokit: any;
 
   constructor(private configService: ConfigService) {
-    const githubToken = this.configService.get<string>('GHTOKEN');
+    this.initOctokit();
+  }
 
+  async initOctokit() {
+    const { Octokit } = await import('@octokit/rest');
+    const githubToken = this.configService.get<string>('GHTOKEN');
     this.octokit = new Octokit({
       auth: githubToken,
     });
@@ -16,7 +20,9 @@ export class GithubService {
 
   async getUserData(username: string) {
     try {
-      const response = await this.octokit.users.getByUsername({ username });
+      const response = await this.octokit.request('GET /users/{username}', {
+        username,
+      });
       return response.data;
     } catch (error) {
       throw new Error(`Github API error: ${error.message}`);
