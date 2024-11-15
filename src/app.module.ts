@@ -6,10 +6,12 @@ import { DatabaseModule } from './database/database.module';
 //import { GithubModule } from './github/github.module';
 import { ConfigModule } from '@nestjs/config';
 import { OctokitModule } from 'nestjs-octokit';
+import { LogsModule } from './database/Logs/Logs.module';
 
 @Module({
   imports: [
     DatabaseModule,
+    LogsModule,
     OctokitModule.forRoot({
       isGlobal: true,
       octokitOptions: {

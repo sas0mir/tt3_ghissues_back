@@ -4,7 +4,7 @@ import { Actions } from './Actions.schema';
 
 @Schema()
 export class Logs extends Document {
-  @Prop({ unique: true, required: true })
+  @Prop({ required: true })
   userIp: string;
 
   @Prop({ required: false, type: Date })

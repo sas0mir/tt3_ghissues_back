@@ -8,13 +8,13 @@ export class Actions extends Document {
   @Prop({ unique: true, required: true })
   id: number;
 
-  @Prop({ required: false, type: Date })
+  @Prop({ required: false, type: Date, default: Date.now })
   createdAt?: Date;
 
   @Prop({ required: false, type: Date })
   deletedAt?: Date;
 
-  @Prop({ required: false })
+  @Prop({ required: true })
   name: string;
 }
 

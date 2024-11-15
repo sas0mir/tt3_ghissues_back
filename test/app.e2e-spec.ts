@@ -17,8 +17,15 @@ describe('AppController (e2e)', () => {
 
   it('/ (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/get_logs?from=0&to=10')
       .expect(200)
-      .expect('Hello World!');
+      .expect((res) => {
+        expect(Array.isArray(res.body)).toBe(true);
+        expect(res.body[0]).toHaveProperty('userIp', '::1');
+      });
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
